@@ -1,2 +1,1 @@
-console.log('hello');
-console.log ('jibberish');
+console.log('main.js is loaded')

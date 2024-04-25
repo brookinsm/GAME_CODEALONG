@@ -2,6 +2,50 @@ const prompt = require('prompt-sync')();
 
 console.log('Welcome to Tic Tac Toe!');
 
+/*------ Lookup Data / Constants -------*/
+const WINNING_COMBOS = [
+  [
+    { row: 0, col: 0 },
+    { row: 0, col: 1 },
+    { row: 0, col: 2 },
+  ],
+  [
+    { row: 1, col: 0 },
+    { row: 1, col: 1 },
+    { row: 1, col: 2 },
+  ],
+  [
+    { row: 2, col: 0 },
+    { row: 2, col: 1 },
+    { row: 2, col: 2 },
+  ],
+  [
+    { row: 0, col: 0 },
+    { row: 1, col: 0 },
+    { row: 2, col: 0 },
+  ],
+  [
+    { row: 0, col: 1 },
+    { row: 1, col: 1 },
+    { row: 2, col: 1 },
+  ],
+  [
+    { row: 0, col: 2 },
+    { row: 1, col: 2 },
+    { row: 2, col: 2 },
+  ],
+  [
+    { row: 0, col: 0 },
+    { row: 1, col: 1 },
+    { row: 2, col: 2 },
+  ],
+  [
+    { row: 0, col: 2 },
+    { row: 1, col: 1 },
+    { row: 2, col: 0 },
+  ],
+];
+
 /*------ State -------*/
 
 const board = [
@@ -26,25 +70,38 @@ function main() {
   // until the game is won or tied, the game will continue
   while (!winner) {
     renderBoard();
-    console.log(
-      'Please select the row and column that you would like to play'
-    );
+    renderMessage();
 
-    let row, col;
-    while (!row || row > 3 || row < 1) {
-      row = prompt('Select row: ');
-      row = parseInt(row);
+    let row = getUserInput('row');
+    let col = getUserInput('column');
+
+    const selectedSpace = board[row - 1][col - 1];
+
+    if (selectedSpace !== ' ') {
+      console.log(
+        'This spot is occupied! Please choose an empty spot!'
+      );
+    } else {
+      // update the board state
+      board[row - 1][col - 1] = turn;
+
+      checkWinner();
+
+      if (turn === 'X') {
+        turn = 'O';
+      } else {
+        turn = 'X';
+      }
     }
 
-    while (!col || col > 3 || col < 1) {
-      col = prompt('Select column: ');
-      col = parseInt(col);
-    }
+    // winner = 'X';
+  }
 
-    console.log('row: ', typeof row);
-    console.log('col ', typeof col);
-
-    winner = 'X';
+  renderBoard();
+  if (winner === 'T') {
+    console.log('Tie Game!!!');
+  } else {
+    console.log(`Congrats to Player ${winner}, you won!`);
   }
 }
 
@@ -56,3 +113,42 @@ function renderBoard() {
   console.log(' --|-|--');
   console.log(`3 ${board[2][0]}|${board[2][1]}|${board[2][2]}`);
 }
+
+function renderMessage() {
+  console.log(`Current turn is ${turn}`);
+  console.log(
+    'Please select the row and column that you would like to play'
+  );
+}
+
+function getUserInput(pos) {
+  let value;
+  while (!value || value > 3 || value < 1) {
+    value = prompt(`Select ${pos}: `);
+    value = parseInt(value);
+  }
+  return value;
+}
+
+function checkWinner() {
+  WINNING_COMBOS.forEach((combo) => {
+    const pos1 = combo[0];
+    const pos2 = combo[1];
+    const pos3 = combo[2];
+
+    if (
+      board[pos1.row][pos1.col] === board[pos2.row][pos2.col] &&
+      board[pos1.row][pos1.col] === board[pos3.row][pos3.col]
+    ) {
+      if (board[pos1.row][pos1.col] !== ' ') {
+        winner = turn;
+      }
+    }
+  });
+
+  const isEmpty = board.some((row) => row.includes(' '));
+
+  if (!winner && !isEmpty) {
+    winner = 'T';
+  }
+} 
