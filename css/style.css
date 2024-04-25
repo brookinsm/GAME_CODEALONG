@@ -6,11 +6,15 @@
 
 body {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+   
+
 }
 
 .board {
-    height: 500px;
-    width: 500px;
+    height: 700px;
+    width: 700px;
     background-color: deepskyblue;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -21,4 +25,17 @@ body {
     height: 100%;
     width: 100%;
     background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xx-large;
+    color: deepskyblue;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
