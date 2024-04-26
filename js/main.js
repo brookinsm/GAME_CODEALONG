@@ -71,8 +71,17 @@ const WINNING_COMBOS = [
   function render() {
     renderMessage();
     renderBoard();
+    renderNewGameBtn();
   }
   
+  function renderNewGamebtn() {
+    if (winner) {
+        const newGameBtn = document.createElement('button')
+        newGameBtn.innerTest = 'New Game';
+        newGameBtn.addEventListener('click', init);
+        document.body.append(newGameBtn)
+    }
+  }
   function renderMessage() {
     if (winner === 'T') {
       messageEl.innerText = "It's a tie game!!";
