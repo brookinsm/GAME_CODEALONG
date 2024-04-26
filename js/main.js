@@ -44,7 +44,11 @@ const WINNING_COMBOS = [
 
   /*----Cached Elements----*/
   const messageEl = document.querySelector('h3.message-header');
-  
+  const boardEl = document.querySelector('div.board');
+
+  boardEl.addEventListener('click', handleBoardClick);
+
+
   /*------ State -------*/
   let board, turn, winner;
   
@@ -88,3 +92,50 @@ const WINNING_COMBOS = [
       });
     });
   }
+
+  function changeTurn() {
+    if (turn === 'X') {
+        turn = 'O';
+      } else {
+        turn = 'X';
+      }
+    }
+
+  function handleBoardClick(evt) {
+    if (evt.target.classList.contains('cell') && !winner) {
+      const row = evt.target.id[1];
+      const col = evt.target.id[3];
+      
+      if(!board[row][col]) {
+        board[row][col] = turn;
+        checkWinner();
+        changeTurn();
+        render();
+      }
+
+    }
+  }
+
+  function checkWinner() {
+    WINNING_COMBOS.forEach((combo) => {
+      const pos1 = combo[0];
+      const pos2 = combo[1];
+      const pos3 = combo[2];
+  
+      if (
+        board[pos1.row][pos1.col] === board[pos2.row][pos2.col] &&
+        board[pos1.row][pos1.col] === board[pos3.row][pos3.col]
+      ) {
+        if (board[pos1.row][pos1.col] !== ' ') {
+          winner = turn;
+        }
+      }
+    });
+
+  const isEmpty = board.some((row) => row.includes(' '));
+
+  if (!winner && !isEmpty) {
+    winner = 'T';
+  }
+
+}
