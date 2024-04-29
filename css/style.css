@@ -2,17 +2,14 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-body {
+  }
+  
+  body {
     height: 100vh;
-    display: flex;
     flex-direction: column;
-   
-
-}
-
-.board {
+  }
+  
+  .board {
     height: 700px;
     width: 700px;
     background-color: deepskyblue;
@@ -20,23 +17,23 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 25px;
-}
-
-.cell {
+  }
+  
+  .cell {
     height: 100%;
     width: 100%;
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 89px;
     color: deepskyblue;
-}
-
-.mb-30 {
+  }
+  
+  .mb-30 {
     margin-bottom: 30px;
-}
-
-.flex-center {
+  }
+  
+  .flex-center {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  } 
